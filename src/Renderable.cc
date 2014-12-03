@@ -50,7 +50,7 @@ SDL_Renderer* Renderable::getRenderer() const {
     return renderer;
 }
 
-void Renderable::render() {
+void Renderable::render(Uint32 tickDiff) {
     SDL_RenderCopy(renderer, texture.get(), nullptr, nullptr);
 }
 

@@ -34,11 +34,11 @@ public:
 	void setDirection(Direction dir);
 	void setSpeed(unsigned int speed);
 public:
-	virtual void render() override;
+	virtual void render(Uint32 tickDiff) override;
 private:
 	Direction dir;
 	unsigned int speed;
-	unsigned int renderCount;
+	unsigned int animationDistance;
 };
 
 #endif /* CHARACTER_HH_ */

@@ -29,7 +29,7 @@ Window::Window(const std::string& title, unsigned int width, unsigned int height
         throw std::runtime_error("Failed to create SDL window");
     }
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (!renderer) {
         SDL_DestroyWindow(window);
         throw std::runtime_error("Failed to create SDL renderer");

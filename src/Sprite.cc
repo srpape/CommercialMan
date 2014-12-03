@@ -44,7 +44,7 @@ void Sprite::setPosition(int x, int y) {
 	position.y = y;
 }
 
-void Sprite::render() {
+void Sprite::render(Uint32 tickDiff) {
 	SDL_RenderCopyEx(getRenderer(), getTexture(), &drawRegion, &position, 0, nullptr, flip);
 }
 

@@ -23,8 +23,8 @@ Character::Character(Window& window, const std::string& fileName, unsigned int f
 		AnimatedSprite(window, fileName, frameCount) {
 
 	dir = NONE;
-	speed = 5;
-	renderCount = 0;
+	speed = 25;
+	animationDistance = 0;
 }
 
 Character::~Character() {
@@ -38,54 +38,60 @@ void Character::setSpeed(unsigned int speed) {
 	this->speed = speed;
 }
 
-void Character::render() {
+void Character::render(Uint32 tickDiff) {
+	bool updatePosition = true;
+
+	const Uint32 distanceMoved = speed * (tickDiff / 100.0f);
+
 	switch (dir) {
 	case UP:
-		position.y -= speed;
+		position.y -= distanceMoved;
 		break;
 	case DOWN:
-		position.y += speed;
+		position.y += distanceMoved;
 		break;
 	case LEFT:
-		position.x -= speed;
+		position.x -= distanceMoved;
 		break;
 	case RIGHT:
-		position.x += speed;
+		position.x += distanceMoved;
 		break;
 	case NONE:
-		AnimatedSprite::render();
-		return;
+		updatePosition = false;
+		break;
 	}
 
-	// TODO: Real collision checks
-	bool moving = true;
-	if (position.x < 20) {
-		position.x = 20;
-		moving = false;
-		setFrameIndex(0);
-	}
-	if (position.x > (800 - (position.w / 2)) - 50) {
-		position.x = (800 - (position.w / 2) - 50);
-		moving = false;
-		setFrameIndex(0);
-	}
-	if (position.y < 20) {
-		position.y = 20;
-		moving = false;
-		setFrameIndex(0);
-	}
-	if (position.y > (600 - (position.h / 2)) - 50) {
-		position.y = (600 - (position.h / 2) - 50);
-		moving = false;
-		setFrameIndex(0);
-	}
+	if (updatePosition) {
+		// TODO: Real collision checks
+		bool moving = true;
+		if (position.x < 20) {
+			position.x = 20;
+			moving = false;
+		}
+		if (position.x > (800 - (position.w / 2)) - 50) {
+			position.x = (800 - (position.w / 2) - 50);
+			moving = false;
+		}
+		if (position.y < 20) {
+			position.y = 20;
+			moving = false;
+		}
+		if (position.y > (600 - (position.h / 2)) - 50) {
+			position.y = (600 - (position.h / 2) - 50);
+			moving = false;
+		}
 
-	if (moving) {
-		++renderCount;
-		if (!(renderCount % 7)) {
-			nextFrame();
+		if (moving) {
+			animationDistance += distanceMoved;
+			if(animationDistance >= 10) {
+				nextFrame();
+				animationDistance = 0;
+			}
+		} else {
+			animationDistance = 0;
+			setFrameIndex(0);
 		}
 	}
 
-	AnimatedSprite::render();
+	AnimatedSprite::render(tickDiff);
 }

@@ -32,7 +32,7 @@ public:
 public:
 	void setPosition(int x, int y);
 public:
-	virtual void render() override;
+	virtual void render(Uint32 tickDiff) override;
 protected:
 	SDL_Rect drawRegion;
 	SDL_Rect position;
