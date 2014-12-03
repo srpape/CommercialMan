@@ -23,7 +23,7 @@
 #include "Renderable.hh"
 #include "Window.hh"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 class Sprite: public Renderable {
 public:

@@ -21,7 +21,7 @@
 #define WINDOW_HH_
 
 #include <string>
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 class Window {
 public:

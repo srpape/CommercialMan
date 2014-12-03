@@ -19,7 +19,7 @@
  */
 #include "Board.hh"
 
-#include <SDL2/SDL_image.h>
+#include <SDL_image.h>
 #include <stdexcept>
 
 Board::Board(Window& window) :

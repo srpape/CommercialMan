@@ -23,7 +23,7 @@
 #include "Player.hh"
 #include "Window.hh"
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include <iostream>
 #include <memory>
