@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+# Emscripten output
+*.html
+*.js
+*.mem
+*.data

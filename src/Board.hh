@@ -29,7 +29,6 @@ class Board: public Renderable {
 public:
     Board(Window& window);
     virtual ~Board();
-private:
 };
 
 #endif /* BOARD_HH_ */

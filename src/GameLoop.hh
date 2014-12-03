@@ -17,36 +17,40 @@
  *  You should have received a copy of the GNU General Public License
  *  along with CommercialMan.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef RENDERABLE_HH_
-#define RENDERABLE_HH_
+#ifndef GAMELOOP_HH_
+#define GAMELOOP_HH_
 
+#include "Board.hh"
+#include "Player.hh"
+#include "Renderable.hh"
 #include "Window.hh"
 
-#include <string>
-#include <memory>
-
 #include <SDL.h>
+#include <vector>
 
-class Renderable {
+class GameLoop {
 public:
-    Renderable(Window& window, const std::string& fileName);
-    virtual ~Renderable();
+    GameLoop(Uint32 width, Uint32 height, Uint32 maxFPS);
+    ~GameLoop();
 public:
-    virtual void render(Uint32 tickDiff);
-
-    int getWidth() const;
-    int getHeight() const;
-    bool isTransparentXY(int x, int y) const;
-protected:
-    SDL_Renderer* getRenderer() const;
-    SDL_Surface* getSurface() const;
-    SDL_Texture* getTexture() const;
+    void run();
+    void runOne();
 private:
-    SDL_Renderer* const renderer;
-    std::shared_ptr<SDL_Surface> surface;
-    std::shared_ptr<SDL_Texture> texture;
-    int width;
-    int height;
+    void pollEvents();
+    void render(Uint32 tickDiff);
+private:
+    const Uint32 delayTime;
+    Window window;
+    Board board;
+    Player player;
+    SDL_Renderer* renderer;
+    bool running;
+    Uint32 firstRenderTime;
+    Uint32 framesRendered;
+
+    Uint32 lastRenderTime;
+
+    std::vector<Renderable*> artifacts;
 };
 
-#endif /* RENDERABLE_HH_ */
+#endif /* GAMELOOP_HH_ */

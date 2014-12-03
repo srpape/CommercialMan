@@ -23,7 +23,7 @@
 #include <stdexcept>
 
 Board::Board(Window& window) :
-		Renderable(window, "board.png") {
+        Renderable(window, "board.png") {
 
 }
 
@@ -31,3 +31,6 @@ Board::~Board() {
 
 }
 
+void Renderable::render(Uint32 tickDiff) {
+    SDL_RenderCopy(renderer, texture.get(), nullptr, nullptr);
+}

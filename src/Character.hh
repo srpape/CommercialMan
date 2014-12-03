@@ -21,10 +21,11 @@
 #define CHARACTER_HH_
 
 #include "AnimatedSprite.hh"
+#include "Board.hh"
 
 class Character: public AnimatedSprite {
 public:
-	Character(Window& window, const std::string& fileName, unsigned int frameCount);
+	Character(Window& window, Board& board, const std::string& fileName, unsigned int frameCount);
 	virtual ~Character();
 public:
 	enum Direction {
@@ -36,6 +37,7 @@ public:
 public:
 	virtual void render(Uint32 tickDiff) override;
 private:
+	Board& board;
 	Direction dir;
 	unsigned int speed;
 	unsigned int animationDistance;

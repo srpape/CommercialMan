@@ -33,6 +33,7 @@ Sprite::Sprite(Window& window, const std::string& fileName) :
 	drawRegion.h = getHeight();
 
 	flip = SDL_FLIP_NONE;
+	rotation = 0.0;
 }
 
 Sprite::~Sprite() {
@@ -45,6 +46,6 @@ void Sprite::setPosition(int x, int y) {
 }
 
 void Sprite::render(Uint32 tickDiff) {
-	SDL_RenderCopyEx(getRenderer(), getTexture(), &drawRegion, &position, 0, nullptr, flip);
+	SDL_RenderCopyEx(getRenderer(), getTexture(), &drawRegion, &position, rotation, nullptr, flip);
 }
 

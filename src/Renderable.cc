@@ -29,16 +29,16 @@ Renderable::Renderable(Window& window, const std::string& fileName) :
 
     const std::string path = "images/" + fileName;
 
-    SDL_Surface* image = IMG_Load(path.c_str());
-    if (!image) {
+    surface.reset(IMG_Load(path.c_str()), SDL_FreeSurface);
+    if (!surface) {
+        std::cout << "Unable to load " + path << ": " << SDL_GetError() << '\n';
         throw std::runtime_error("Unable to load " + path);
     }
-    texture.reset(SDL_CreateTextureFromSurface(renderer, image), SDL_DestroyTexture);
+    texture.reset(SDL_CreateTextureFromSurface(renderer, surface.get()), SDL_DestroyTexture);
     if (!texture) {
-        SDL_FreeSurface(image);
+        std::cout << "Unable to create texture for " + path << '\n';
         throw std::runtime_error("Unable to create texture for " + path);
     }
-    SDL_FreeSurface(image);
 
     SDL_QueryTexture(texture.get(), nullptr, nullptr, &width, &height);
 }
@@ -50,10 +50,6 @@ SDL_Renderer* Renderable::getRenderer() const {
     return renderer;
 }
 
-void Renderable::render(Uint32 tickDiff) {
-    SDL_RenderCopy(renderer, texture.get(), nullptr, nullptr);
-}
-
 int Renderable::getWidth() const {
     return width;
 }
@@ -62,7 +58,39 @@ int Renderable::getHeight() const {
     return height;
 }
 
+SDL_Surface* Renderable::getSurface() const {
+    return surface.get();
+}
+
 SDL_Texture* Renderable::getTexture() const {
     return texture.get();
 }
 
+bool Renderable::isTransparentXY(int x, int y) const {
+    int bpp = surface->format->BytesPerPixel;
+    Uint8* p = (Uint8*) surface->pixels + y * surface->pitch + x * bpp;
+    Uint32 pixelColor;
+
+    switch (bpp) {
+    case (1):
+        pixelColor = *p;
+        break;
+    case (2):
+        pixelColor = *(Uint16*) p;
+        break;
+    case (3):
+        if (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+            pixelColor = p[0] << 16 | p[1] << 8 | p[2];
+        else
+            pixelColor = p[0] | p[1] << 8 | p[2] << 16;
+        break;
+    case (4):
+        pixelColor = *(Uint32*) p;
+        break;
+    }
+
+    Uint8 red, green, blue, alpha;
+    SDL_GetRGBA(pixelColor, surface->format, &red, &green, &blue, &alpha);
+
+    return alpha <= 20;
+}

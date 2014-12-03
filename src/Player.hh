@@ -24,7 +24,7 @@
 
 class Player: public Character {
 public:
-	Player(Window& window);
+	Player(Window& window, Board& board);
 	virtual ~Player();
 public:
 	void handleKeyDown(SDL_Event& event);

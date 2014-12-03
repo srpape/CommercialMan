@@ -37,6 +37,7 @@ protected:
 	SDL_Rect drawRegion;
 	SDL_Rect position;
 	SDL_RendererFlip flip;
+	double rotation;
 };
 
 #endif /* SPRITE_HH_ */
