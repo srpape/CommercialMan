@@ -72,20 +72,18 @@ int main(int argc, char** argv) {
             case SDL_KEYDOWN:
                 player.handleKeyDown(event);
                 break;
-            case SDL_KEYUP:
-                player.handleKeyUp(event);
-                break;
             default:
                 break;
             }
         }
 
         board.render();
-        player.render();
 
         for (Cigg& cigg : ciggs) {
             cigg.render();
         }
+
+        player.render();
 
         // Update the screen
         SDL_RenderPresent(renderer);

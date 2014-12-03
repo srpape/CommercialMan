@@ -20,17 +20,19 @@
 #include "Sprite.hh"
 
 Sprite::Sprite(Window& window, const std::string& fileName) :
-        Renderable(window, fileName) {
+		Renderable(window, fileName) {
 
-    position.x = 0;
-    position.y = 0;
-    position.w = getWidth();
-    position.h = getHeight();
+	position.x = 0;
+	position.y = 0;
+	position.w = getWidth();
+	position.h = getHeight();
 
-    drawRegion.x = 0;
-    drawRegion.y = 0;
-    drawRegion.w = getWidth();
-    drawRegion.h = getHeight();
+	drawRegion.x = 0;
+	drawRegion.y = 0;
+	drawRegion.w = getWidth();
+	drawRegion.h = getHeight();
+
+	flip = SDL_FLIP_NONE;
 }
 
 Sprite::~Sprite() {
@@ -38,11 +40,11 @@ Sprite::~Sprite() {
 }
 
 void Sprite::setPosition(int x, int y) {
-    position.x = x;
-    position.y = y;
+	position.x = x;
+	position.y = y;
 }
 
-void Sprite::render() const {
-    SDL_RenderCopy(getRenderer(), getTexture(), &drawRegion, &position);
+void Sprite::render() {
+	SDL_RenderCopyEx(getRenderer(), getTexture(), &drawRegion, &position, 0, nullptr, flip);
 }
 

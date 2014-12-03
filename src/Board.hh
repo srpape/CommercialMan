@@ -29,8 +29,6 @@ class Board: public Renderable {
 public:
     Board(Window& window);
     virtual ~Board();
-public:
-    virtual bool intersects(SDL_Rect* rect) const;
 private:
 };
 

@@ -27,9 +27,12 @@ public:
     AnimatedSprite(Window& window, const std::string& fileName, unsigned int frameCount);
     virtual ~AnimatedSprite();
 public:
+    unsigned int getFrameCount() const;
     void setFrameIndex(unsigned int index);
+    void nextFrame();
 private:
     const unsigned int frameCount;
+    unsigned int frameIndex;
 };
 
 #endif /* ANIMATEDSPRITE_HH_ */

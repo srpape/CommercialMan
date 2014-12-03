@@ -22,24 +22,37 @@
 #include <stdexcept>
 
 AnimatedSprite::AnimatedSprite(Window& window, const std::string& fileName, unsigned int frameCount) :
-        Sprite(window, fileName), frameCount(frameCount) {
+		Sprite(window, fileName), frameCount(frameCount) {
 
-    drawRegion.h = getHeight();
-    drawRegion.w = getWidth() / frameCount;
-    drawRegion.x = 0;
-    drawRegion.y = 0;
+	drawRegion.h = getHeight();
+	drawRegion.w = getWidth() / frameCount;
+	drawRegion.x = 0;
+	drawRegion.y = 0;
 
-    position.w = drawRegion.w;
+	position.w = drawRegion.w;
+
+	frameIndex = 0;
 }
 
 AnimatedSprite::~AnimatedSprite() {
-    // TODO Auto-generated destructor stub
+	// TODO Auto-generated destructor stub
+}
+
+unsigned int AnimatedSprite::getFrameCount() const {
+	return frameCount;
 }
 
 void AnimatedSprite::setFrameIndex(unsigned int index) {
-    if (index >= frameCount) {
-        throw std::runtime_error("Invalid frame index");
-    }
-    drawRegion.x = index * drawRegion.w;
+	if (index >= frameCount) {
+		throw std::runtime_error("Invalid frame index");
+	}
+	drawRegion.x = index * drawRegion.w;
+	frameIndex = index;
 }
 
+void AnimatedSprite::nextFrame() {
+	frameIndex++;
+	if (frameIndex >= frameCount)
+		frameIndex = 0;
+	setFrameIndex(frameIndex);
+}

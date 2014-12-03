@@ -27,15 +27,16 @@
 
 class Sprite: public Renderable {
 public:
-    Sprite(Window& window, const std::string& fileName);
-    virtual ~Sprite();
+	Sprite(Window& window, const std::string& fileName);
+	virtual ~Sprite();
 public:
-    void setPosition(int x, int y);
+	void setPosition(int x, int y);
 public:
-    virtual void render() const;
+	virtual void render() override;
 protected:
-    SDL_Rect drawRegion;
-    SDL_Rect position;
+	SDL_Rect drawRegion;
+	SDL_Rect position;
+	SDL_RendererFlip flip;
 };
 
 #endif /* SPRITE_HH_ */

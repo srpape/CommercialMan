@@ -20,10 +20,8 @@
 #include "Player.hh"
 
 Player::Player(Window& window) :
-        AnimatedSprite(window, "man.png", 1) {
+		Character(window, "man.png", 2) {
 
-    speed = 5;
-    hspeed = vspeed = 0;
 }
 
 Player::~Player() {
@@ -31,61 +29,30 @@ Player::~Player() {
 }
 
 void Player::handleKeyDown(SDL_Event& event) {
-    if (event.key.repeat)
-        return;
+	if (event.key.repeat)
+		return;
 
-    switch (event.key.keysym.scancode) {
-    case SDL_SCANCODE_UP:
-    case SDL_SCANCODE_W:
-        vspeed -= speed;
-        break;
-    case SDL_SCANCODE_DOWN:
-    case SDL_SCANCODE_S:
-        vspeed += speed;
-        break;
-    case SDL_SCANCODE_LEFT:
-    case SDL_SCANCODE_A:
-        hspeed -= speed;
-        break;
-    case SDL_SCANCODE_RIGHT:
-    case SDL_SCANCODE_D:
-        hspeed += speed;
-        break;
-    }
+	switch (event.key.keysym.scancode) {
+	case SDL_SCANCODE_UP:
+	case SDL_SCANCODE_W:
+		setDirection(UP);
+		break;
+	case SDL_SCANCODE_DOWN:
+	case SDL_SCANCODE_S:
+		setDirection(DOWN);
+		break;
+	case SDL_SCANCODE_LEFT:
+	case SDL_SCANCODE_A:
+		setDirection(LEFT);
+		flip = SDL_FLIP_HORIZONTAL;
+		break;
+	case SDL_SCANCODE_RIGHT:
+	case SDL_SCANCODE_D:
+		setDirection(RIGHT);
+		flip = SDL_FLIP_NONE;
+		break;
+	default:
+		break;
+	}
 }
 
-void Player::handleKeyUp(SDL_Event& event) {
-    if (event.key.repeat)
-        return;
-
-    switch (event.key.keysym.scancode) {
-    case SDL_SCANCODE_UP:
-    case SDL_SCANCODE_W:
-        vspeed += speed;
-        break;
-    case SDL_SCANCODE_DOWN:
-    case SDL_SCANCODE_S:
-        vspeed -= speed;
-        break;
-    case SDL_SCANCODE_LEFT:
-    case SDL_SCANCODE_A:
-        hspeed += speed;
-        break;
-    case SDL_SCANCODE_RIGHT:
-    case SDL_SCANCODE_D:
-        hspeed -= speed;
-        break;
-    }
-}
-
-void Player::render() {
-    position.x += hspeed;
-    position.y += vspeed;
-
-    if (position.x < 0)
-        position.x = 0;
-    if (position.y < 0)
-        position.y = 0;
-
-    AnimatedSprite::render();
-}

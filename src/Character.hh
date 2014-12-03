@@ -17,17 +17,28 @@
  *  You should have received a copy of the GNU General Public License
  *  along with CommercialMan.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "Board.hh"
+#ifndef CHARACTER_HH_
+#define CHARACTER_HH_
 
-#include <SDL2/SDL_image.h>
-#include <stdexcept>
+#include "AnimatedSprite.hh"
 
-Board::Board(Window& window) :
-		Renderable(window, "board.png") {
+class Character: public AnimatedSprite {
+public:
+	Character(Window& window, const std::string& fileName, unsigned int frameCount);
+	virtual ~Character();
+public:
+	enum Direction {
+		NONE, UP, DOWN, LEFT, RIGHT
+	};
+public:
+	void setDirection(Direction dir);
+	void setSpeed(unsigned int speed);
+public:
+	virtual void render() override;
+private:
+	Direction dir;
+	unsigned int speed;
+	unsigned int renderCount;
+};
 
-}
-
-Board::~Board() {
-
-}
-
+#endif /* CHARACTER_HH_ */

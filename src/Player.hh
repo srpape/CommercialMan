@@ -20,23 +20,14 @@
 #ifndef PLAYER_HH_
 #define PLAYER_HH_
 
-#include "AnimatedSprite.hh"
+#include "Character.hh"
 
-#include <ctime>
-
-class Player: public AnimatedSprite {
+class Player: public Character {
 public:
-    Player(Window& window);
-    virtual ~Player();
+	Player(Window& window);
+	virtual ~Player();
 public:
-    void handleKeyDown(SDL_Event& event);
-    void handleKeyUp(SDL_Event& event);
-public:
-    virtual void render();
-private:
-    int speed;
-    int vspeed;
-    int hspeed;
+	void handleKeyDown(SDL_Event& event);
 };
 
 #endif /* PLAYER_HH_ */
