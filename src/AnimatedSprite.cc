@@ -22,37 +22,45 @@
 #include <stdexcept>
 
 AnimatedSprite::AnimatedSprite(Window& window, const std::string& fileName, unsigned int frameCount) :
-		Sprite(window, fileName), frameCount(frameCount) {
+        Sprite(window, fileName), frameCount(frameCount) {
 
-	drawRegion.h = getHeight();
-	drawRegion.w = getWidth() / frameCount;
-	drawRegion.x = 0;
-	drawRegion.y = 0;
+    drawRegion.h = getHeight();
+    drawRegion.w = getWidth() / frameCount;
+    drawRegion.x = 0;
+    drawRegion.y = 0;
 
-	position.w = drawRegion.w;
+    position.w = drawRegion.w;
 
-	frameIndex = 0;
+    frameIndex = 0;
 }
 
 AnimatedSprite::~AnimatedSprite() {
-	// TODO Auto-generated destructor stub
+    // TODO Auto-generated destructor stub
+}
+
+int AnimatedSprite::getWidth() const {
+    return drawRegion.w;
+}
+
+int AnimatedSprite::getHeight() const {
+    return drawRegion.h;
 }
 
 unsigned int AnimatedSprite::getFrameCount() const {
-	return frameCount;
+    return frameCount;
 }
 
 void AnimatedSprite::setFrameIndex(unsigned int index) {
-	if (index >= frameCount) {
-		throw std::runtime_error("Invalid frame index");
-	}
-	drawRegion.x = index * drawRegion.w;
-	frameIndex = index;
+    if (index >= frameCount) {
+        throw std::runtime_error("Invalid frame index");
+    }
+    drawRegion.x = index * drawRegion.w;
+    frameIndex = index;
 }
 
 void AnimatedSprite::nextFrame() {
-	frameIndex++;
-	if (frameIndex >= frameCount)
-		frameIndex = 0;
-	setFrameIndex(frameIndex);
+    frameIndex++;
+    if (frameIndex >= frameCount)
+        frameIndex = 0;
+    setFrameIndex(frameIndex);
 }

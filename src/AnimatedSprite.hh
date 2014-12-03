@@ -27,6 +27,9 @@ public:
     AnimatedSprite(Window& window, const std::string& fileName, unsigned int frameCount);
     virtual ~AnimatedSprite();
 public:
+    virtual int getWidth() const;
+    virtual int getHeight() const;
+public:
     unsigned int getFrameCount() const;
     void setFrameIndex(unsigned int index);
     void nextFrame();

@@ -28,6 +28,53 @@ Player::~Player() {
 
 }
 
+void Player::render(std::set<Sprite*>& artifacts, Uint32 tickDiff) {
+
+    for (auto iter = artifacts.begin(); iter != artifacts.end();) {
+        Sprite* artifact = *iter;
+
+        if (isInsideMe(artifact)) {
+            iter = artifacts.erase(iter);
+            delete artifact;
+        } else {
+            ++iter;
+        }
+    }
+
+    Character::render(tickDiff);
+}
+
+bool Player::isInsideMe(int x, int y) const {
+    if (x < getX())
+        return false;
+
+    if (y < getY())
+        return false;
+
+    if (x > getX() + getWidth())
+        return false;
+
+    if (y > getY() + getHeight())
+        return false;
+
+    return true;
+}
+
+bool Player::isInsideMe(const Sprite* sprite) const {
+
+    if (isInsideMe(sprite->getX(), sprite->getY()))
+        return true;
+    if (isInsideMe(sprite->getX() + sprite->getWidth(), sprite->getY()))
+        return true;
+    if (isInsideMe(sprite->getX(), sprite->getY() + sprite->getHeight()))
+        return true;
+    if (isInsideMe(sprite->getX() + sprite->getWidth(), sprite->getY() + sprite->getHeight()))
+        return true;
+
+    return false;
+
+}
+
 void Player::handleKeyDown(SDL_Event& event) {
     if (event.key.repeat)
         return;

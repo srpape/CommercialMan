@@ -30,6 +30,8 @@ public:
 	Sprite(Window& window, const std::string& fileName);
 	virtual ~Sprite();
 public:
+	int getX() const;
+	int getY() const;
 	void setPosition(int x, int y);
 public:
 	virtual void render(Uint32 tickDiff) override;

@@ -29,7 +29,7 @@ using namespace std;
 
 const static unsigned int SCREEN_WIDTH = 1024;
 const static unsigned int SCREEN_HEIGHT = 768;
-const static unsigned int MAX_FPS = 30;
+const static unsigned int MAX_FPS = 100;
 
 #ifdef __EMSCRIPTEN__
 static GameLoop* emLoop = nullptr;
@@ -42,7 +42,7 @@ void runOne() {
 
 // Main game loop
 int main(int argc, char** argv) {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) != 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS) != 0) {
         cout << "Error initializing SDL\n";
         return 1;
     }

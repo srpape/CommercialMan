@@ -26,7 +26,7 @@ GameLoop::GameLoop(Uint32 width, Uint32 height, Uint32 maxFPS) :
         delayTime(1000 / maxFPS), window("CommercialMan v0.0.1", width, height), board(window), player(window, board), running(true) {
 
     renderer = window.getRenderer();
-    SDL_SetRenderDrawColor(renderer, 0x7f, 0x7f, 0x7f, SDL_ALPHA_OPAQUE);
+    SDL_SetRenderDrawColor(renderer, 0x0, 0, 0x30, SDL_ALPHA_OPAQUE);
 
     // Initial player position
     player.setPosition(width / 2, height / 2);
@@ -36,7 +36,7 @@ GameLoop::GameLoop(Uint32 width, Uint32 height, Uint32 maxFPS) :
     for (int i = 0; i < 5; ++i) {
         Cigg* cigg = new Cigg(srcCigg);
         cigg->setPosition(rand() % width, rand() % height);
-        artifacts.push_back(cigg);
+        artifacts.insert(cigg);
     }
 
     firstRenderTime = lastRenderTime = SDL_GetTicks();
@@ -44,7 +44,7 @@ GameLoop::GameLoop(Uint32 width, Uint32 height, Uint32 maxFPS) :
 }
 
 GameLoop::~GameLoop() {
-    for (Renderable* artifact : artifacts) {
+    for (Sprite* artifact : artifacts) {
         delete artifact;
     }
 }
@@ -60,7 +60,8 @@ void GameLoop::runOne() {
     const Uint32 time = SDL_GetTicks();
     const Uint32 millisecondsSinceRender = time - lastRenderTime;
     if (millisecondsSinceRender > delayTime) {
-        render(time - lastRenderTime);
+        render(millisecondsSinceRender);
+        lastRenderTime = time;
     }
 }
 
@@ -84,21 +85,23 @@ void GameLoop::render(Uint32 tickDiff) {
     SDL_RenderClear(renderer);
 
     board.render(tickDiff);
-    for (Renderable* artifact : artifacts) {
+    player.render(artifacts, tickDiff);
+
+    for (Sprite* artifact : artifacts) {
         artifact->render(tickDiff);
     }
-    player.render(tickDiff);
 
-// Update the screen
+    // Update the screen
     SDL_RenderPresent(renderer);
 
-    lastRenderTime = SDL_GetTicks();
-    if (framesRendered % 100 == 0) {
-        float fps = framesRendered;
-        fps /= ((lastRenderTime - firstRenderTime) / 1000.0);
-        std::cout << "FPS: " << fps << " (delayTime:" << delayTime << " Frames: " << framesRendered << ")\n";
-    }
+    /*
+     if (framesRendered % 100 == 0) {
+     float fps = framesRendered;
+     fps /= ((lastRenderTime - firstRenderTime) / 1000.0);
+     std::cout << "FPS: " << fps << " (delayTime:" << delayTime << " Frames: " << framesRendered << ")\n";
+     }
+     ++framesRendered;
+     */
 
-    ++framesRendered;
 }
 

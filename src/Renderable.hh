@@ -34,8 +34,8 @@ public:
 public:
     virtual void render(Uint32 tickDiff);
 
-    int getWidth() const;
-    int getHeight() const;
+    virtual int getWidth() const;
+    virtual int getHeight() const;
     bool isTransparentXY(int x, int y) const;
 protected:
     SDL_Renderer* getRenderer() const;

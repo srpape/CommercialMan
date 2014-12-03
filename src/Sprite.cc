@@ -20,32 +20,40 @@
 #include "Sprite.hh"
 
 Sprite::Sprite(Window& window, const std::string& fileName) :
-		Renderable(window, fileName) {
+        Renderable(window, fileName) {
 
-	position.x = 0;
-	position.y = 0;
-	position.w = getWidth();
-	position.h = getHeight();
+    position.x = 0;
+    position.y = 0;
+    position.w = getWidth();
+    position.h = getHeight();
 
-	drawRegion.x = 0;
-	drawRegion.y = 0;
-	drawRegion.w = getWidth();
-	drawRegion.h = getHeight();
+    drawRegion.x = 0;
+    drawRegion.y = 0;
+    drawRegion.w = getWidth();
+    drawRegion.h = getHeight();
 
-	flip = SDL_FLIP_NONE;
-	rotation = 0.0;
+    flip = SDL_FLIP_NONE;
+    rotation = 0.0;
 }
 
 Sprite::~Sprite() {
 
 }
 
+int Sprite::getX() const {
+    return position.x;
+}
+
+int Sprite::getY() const {
+    return position.y;
+}
+
 void Sprite::setPosition(int x, int y) {
-	position.x = x;
-	position.y = y;
+    position.x = x;
+    position.y = y;
 }
 
 void Sprite::render(Uint32 tickDiff) {
-	SDL_RenderCopyEx(getRenderer(), getTexture(), &drawRegion, &position, rotation, nullptr, flip);
+    SDL_RenderCopyEx(getRenderer(), getTexture(), &drawRegion, &position, rotation, nullptr, flip);
 }
 

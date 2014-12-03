@@ -26,7 +26,7 @@
 #include "Window.hh"
 
 #include <SDL.h>
-#include <vector>
+#include <set>
 
 class GameLoop {
 public:
@@ -50,7 +50,7 @@ private:
 
     Uint32 lastRenderTime;
 
-    std::vector<Renderable*> artifacts;
+    std::set<Sprite*> artifacts;
 };
 
 #endif /* GAMELOOP_HH_ */

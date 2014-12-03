@@ -22,12 +22,19 @@
 
 #include "Character.hh"
 
+#include <set>
+
 class Player: public Character {
 public:
-	Player(Window& window, Board& board);
-	virtual ~Player();
+    Player(Window& window, Board& board);
+    virtual ~Player();
 public:
-	void handleKeyDown(SDL_Event& event);
+    void render(std::set<Sprite*>& artifacts, Uint32 tickDiff);
+public:
+    void handleKeyDown(SDL_Event& event);
+private:
+    bool isInsideMe(const Sprite* sprite) const;
+    bool isInsideMe(int x, int y) const;
 };
 
 #endif /* PLAYER_HH_ */
