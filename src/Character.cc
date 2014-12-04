@@ -19,8 +19,6 @@
  */
 #include "Character.hh"
 
-#include <SDL/SDL_ttf.h>
-
 Character::Character(Window& window, Board& board, const std::string& fileName, unsigned int frameCount) :
         AnimatedSprite(window, fileName, frameCount), board(board) {
 
