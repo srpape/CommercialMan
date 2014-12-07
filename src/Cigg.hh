@@ -27,7 +27,11 @@ class Cigg: public Sprite {
 public:
     Cigg(Window& window);
     virtual ~Cigg();
+public:
+    virtual void onCollideWithPlayer(Player& player) override;
+	virtual void render(Uint32 tickDiff) override;
 private:
+	Uint32 destroyTimeout;
 };
 
 #endif /* CIGG_HH_ */

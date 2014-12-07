@@ -25,16 +25,27 @@
 
 #include <SDL.h>
 
+class Player;
+
 class Sprite: public Renderable {
 public:
 	Sprite(Window& window, const std::string& fileName);
 	virtual ~Sprite();
 public:
+	float getCenterX() const;
+	float getCenterY() const;
+
 	int getX() const;
 	int getY() const;
 	void setPosition(int x, int y);
+
+	bool isColliding(const Sprite& sprite) const;
+
+	float getDistance(const Sprite& sprite) const;
+	float getDistance(int x, int y) const;
 public:
 	virtual void render(Uint32 tickDiff) override;
+	virtual void onCollideWithPlayer(Player& player);
 protected:
 	SDL_Rect drawRegion;
 	SDL_Rect position;

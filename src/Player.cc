@@ -20,7 +20,7 @@
 #include "Player.hh"
 
 Player::Player(Window& window, Board& board) :
-        Character(window, board, "man.png", 2) {
+		Character(window, board, "man.png", 2) {
 
 }
 
@@ -28,90 +28,43 @@ Player::~Player() {
 
 }
 
-void Player::render(std::set<Sprite*>& artifacts, Uint32 tickDiff) {
-
-    for (auto iter = artifacts.begin(); iter != artifacts.end();) {
-        Sprite* artifact = *iter;
-
-        if (isInsideMe(artifact)) {
-            iter = artifacts.erase(iter);
-            delete artifact;
-        } else {
-            ++iter;
-        }
-    }
-
-    Character::render(tickDiff);
-}
-
-bool Player::isInsideMe(int x, int y) const {
-    if (x < getX())
-        return false;
-
-    if (y < getY())
-        return false;
-
-    if (x > getX() + getWidth())
-        return false;
-
-    if (y > getY() + getHeight())
-        return false;
-
-    return true;
-}
-
-bool Player::isInsideMe(const Sprite* sprite) const {
-
-    if (isInsideMe(sprite->getX(), sprite->getY()))
-        return true;
-    if (isInsideMe(sprite->getX() + sprite->getWidth(), sprite->getY()))
-        return true;
-    if (isInsideMe(sprite->getX(), sprite->getY() + sprite->getHeight()))
-        return true;
-    if (isInsideMe(sprite->getX() + sprite->getWidth(), sprite->getY() + sprite->getHeight()))
-        return true;
-
-    return false;
-
-}
-
 void Player::handleKeyDown(SDL_Event& event) {
-    if (event.key.repeat)
-        return;
+	if (event.key.repeat)
+		return;
 
-    switch (event.key.keysym.scancode) {
-    case SDL_SCANCODE_UP:
-    case SDL_SCANCODE_W:
-        if (flip == SDL_FLIP_HORIZONTAL) {
-            rotation = 90.0;
-        } else {
-            rotation = -90.0;
-        }
-        setDirection(UP);
-        break;
-    case SDL_SCANCODE_DOWN:
-    case SDL_SCANCODE_S:
-        if (flip == SDL_FLIP_HORIZONTAL) {
-            rotation = -90.0;
-        } else {
-            rotation = 90.0;
-        }
-        setDirection(DOWN);
-        break;
-    case SDL_SCANCODE_LEFT:
-    case SDL_SCANCODE_A:
-        rotation = 0.0;
-        setDirection(LEFT);
-        flip = SDL_FLIP_HORIZONTAL;
-        break;
-    case SDL_SCANCODE_RIGHT:
-    case SDL_SCANCODE_D:
-        rotation = 0.0;
-        setDirection(RIGHT);
-        flip = SDL_FLIP_NONE;
-        break;
-    default:
-        break;
-    }
+	switch (event.key.keysym.scancode) {
+	case SDL_SCANCODE_UP:
+	case SDL_SCANCODE_W:
+		if (flip == SDL_FLIP_HORIZONTAL) {
+			rotation = 90.0;
+		} else {
+			rotation = -90.0;
+		}
+		setDirection(UP);
+		break;
+	case SDL_SCANCODE_DOWN:
+	case SDL_SCANCODE_S:
+		if (flip == SDL_FLIP_HORIZONTAL) {
+			rotation = -90.0;
+		} else {
+			rotation = 90.0;
+		}
+		setDirection(DOWN);
+		break;
+	case SDL_SCANCODE_LEFT:
+	case SDL_SCANCODE_A:
+		rotation = 0.0;
+		setDirection(LEFT);
+		flip = SDL_FLIP_HORIZONTAL;
+		break;
+	case SDL_SCANCODE_RIGHT:
+	case SDL_SCANCODE_D:
+		rotation = 0.0;
+		setDirection(RIGHT);
+		flip = SDL_FLIP_NONE;
+		break;
+	default:
+		break;
+	}
 }
 

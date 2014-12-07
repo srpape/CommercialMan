@@ -20,11 +20,14 @@
 							<option id="cdt.managedbuild.option.gnu.cross.prefix.647988604" name="Prefix" superClass="cdt.managedbuild.option.gnu.cross.prefix"/>
 							<option id="cdt.managedbuild.option.gnu.cross.path.109003081" name="Path" superClass="cdt.managedbuild.option.gnu.cross.path"/>
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1005649772" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
-							<builder buildPath="${workspace_loc:/CommercialMan}/build/" id="cdt.managedbuild.builder.gnu.cross.81335829" managedBuildOn="false" name="Gnu Make Builder.Default" superClass="cdt.managedbuild.builder.gnu.cross"/>
+							<builder buildPath="${workspace_loc:/CommercialMan}/build/" id="cdt.managedbuild.builder.gnu.cross.81335829" keepEnvironmentInBuildfile="false" managedBuildOn="false" name="Gnu Make Builder" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.486853323" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1405693264" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1231969747" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
+								<option id="gnu.cpp.compiler.option.include.paths.1153221552" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="/usr/local/include/SDL2/"/>
+								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.660642219" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.linker.1106956945" name="Cross GCC Linker" superClass="cdt.managedbuild.tool.gnu.cross.c.linker"/>
@@ -60,10 +63,16 @@
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.10144507;cdt.managedbuild.toolchain.gnu.base.10144507.1364717502;cdt.managedbuild.tool.gnu.cpp.compiler.base.28622397;cdt.managedbuild.tool.gnu.cpp.compiler.input.1005801470">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.10144507;cdt.managedbuild.toolchain.gnu.base.10144507.1364717502;cdt.managedbuild.tool.gnu.c.compiler.base.1105055705;cdt.managedbuild.tool.gnu.c.compiler.input.1376508159">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.10144507;cdt.managedbuild.toolchain.gnu.base.10144507.1364717502;cdt.managedbuild.tool.gnu.cpp.compiler.base.28622397;cdt.managedbuild.tool.gnu.cpp.compiler.input.1005801470">
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.10144507;cdt.managedbuild.toolchain.gnu.base.10144507.1364717502;cdt.managedbuild.tool.gnu.cross.c.compiler.486853323;cdt.managedbuild.tool.gnu.c.compiler.input.1405693264">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="cdt.managedbuild.toolchain.gnu.base.10144507;cdt.managedbuild.toolchain.gnu.base.10144507.1364717502;cdt.managedbuild.tool.gnu.cross.cpp.compiler.1231969747;cdt.managedbuild.tool.gnu.cpp.compiler.input.660642219">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>

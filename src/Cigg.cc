@@ -19,12 +19,29 @@
  */
 #include "Cigg.hh"
 
-Cigg::Cigg(Window& window) :
-        Sprite(window, "cigg.png") {
+#include <SDL2_gfxPrimitives.h>
 
+Cigg::Cigg(Window& window) :
+		Sprite(window, "cigg.png") {
+
+	destroyTimeout = 0;
 }
 
 Cigg::~Cigg() {
 
 }
 
+void Cigg::onCollideWithPlayer(Player& player) {
+	if (!destroyTimeout)
+		destroyTimeout = SDL_GetTicks() + 600;
+}
+
+void Cigg::render(Uint32 tickDiff) {
+	if (!destroyTimeout) {
+		Sprite::render(tickDiff);
+	} else if (SDL_GetTicks() < destroyTimeout) {
+		stringRGBA(getRenderer(), getX(), getY(), "1000", 0, 0xFF, 0, SDL_ALPHA_OPAQUE);
+	} else {
+		// Don't render anything, we're gone.
+	}
+}

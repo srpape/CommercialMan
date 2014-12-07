@@ -20,88 +20,93 @@
 #include "GameLoop.hh"
 #include "Cigg.hh"
 
+#include <SDL_mixer.h>
 #include <iostream>
 
 GameLoop::GameLoop(Uint32 width, Uint32 height, Uint32 maxFPS) :
-        delayTime(1000 / maxFPS), window("CommercialMan v0.0.1", width, height), board(window), player(window, board), running(true) {
+		delayTime(1000 / maxFPS), window("CommercialMan v0.0.1", width, height), board(window), player(window, board), running(
+				true) {
 
-    renderer = window.getRenderer();
-    SDL_SetRenderDrawColor(renderer, 0x0, 0, 0x30, SDL_ALPHA_OPAQUE);
+	renderer = window.getRenderer();
 
-    // Initial player position
-    player.setPosition(width / 2, height / 2);
+	// Initial player position
+	player.setPosition(width / 2, height / 2);
 
-    // Create a master cigg for cloning
-    Cigg srcCigg(window);
-    for (int i = 0; i < 5; ++i) {
-        Cigg* cigg = new Cigg(srcCigg);
-        cigg->setPosition(rand() % width, rand() % height);
-        artifacts.insert(cigg);
-    }
+	// Create a master cigg for cloning
+	Cigg srcCigg(window);
+	for (int i = 0; i < 10; ++i) {
+		Cigg* cigg = new Cigg(srcCigg);
+		cigg->setPosition(rand() % width, rand() % height);
+		artifacts.insert(cigg);
+	}
 
-    firstRenderTime = lastRenderTime = SDL_GetTicks();
-    framesRendered = 0;
+	firstRenderTime = lastRenderTime = SDL_GetTicks();
+	framesRendered = 0;
 }
 
 GameLoop::~GameLoop() {
-    for (Sprite* artifact : artifacts) {
-        delete artifact;
-    }
+	for (Sprite* artifact : artifacts) {
+		delete artifact;
+	}
 }
 
 void GameLoop::run() {
-    while (running) {
-        runOne();
-    }
+	while (running) {
+		runOne();
+	}
 }
 void GameLoop::runOne() {
-    pollEvents();
+	pollEvents();
 
-    const Uint32 time = SDL_GetTicks();
-    const Uint32 millisecondsSinceRender = time - lastRenderTime;
-    if (millisecondsSinceRender > delayTime) {
-        render(millisecondsSinceRender);
-        lastRenderTime = time;
-    }
+	const Uint32 time = SDL_GetTicks();
+	const Uint32 millisecondsSinceRender = time - lastRenderTime;
+	if (millisecondsSinceRender > delayTime) {
+		render(millisecondsSinceRender);
+		lastRenderTime = time;
+	}
 }
 
 void GameLoop::pollEvents() {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        switch (event.type) {
-        case SDL_QUIT:
-            running = false;
-            break;
-        case SDL_KEYDOWN:
-            player.handleKeyDown(event);
-            break;
-        default:
-            break;
-        }
-    }
+	SDL_Event event;
+	while (SDL_PollEvent(&event)) {
+		switch (event.type) {
+		case SDL_QUIT:
+			running = false;
+			break;
+		case SDL_KEYDOWN:
+			player.handleKeyDown(event);
+			break;
+		default:
+			break;
+		}
+	}
 }
 
 void GameLoop::render(Uint32 tickDiff) {
-    SDL_RenderClear(renderer);
+	// If we don't reset the color before each RenderClear(), the SDL2_gfx library messes things up when things are drawn.
+	SDL_SetRenderDrawColor(renderer, 0x0, 0, 0x30, SDL_ALPHA_OPAQUE);
+	SDL_RenderClear(renderer);
 
-    board.render(tickDiff);
-    player.render(artifacts, tickDiff);
+	board.render(tickDiff);
+	player.render(tickDiff);
 
-    for (Sprite* artifact : artifacts) {
-        artifact->render(tickDiff);
-    }
+	for (Sprite* artifact : artifacts) {
+		artifact->render(tickDiff);
+		if (artifact->isColliding(player)) {
+			artifact->onCollideWithPlayer(player);
+		}
+	}
 
-    // Update the screen
-    SDL_RenderPresent(renderer);
+	// Update the screen
+	SDL_RenderPresent(renderer);
 
-    /*
-     if (framesRendered % 100 == 0) {
-     float fps = framesRendered;
-     fps /= ((lastRenderTime - firstRenderTime) / 1000.0);
-     std::cout << "FPS: " << fps << " (delayTime:" << delayTime << " Frames: " << framesRendered << ")\n";
-     }
-     ++framesRendered;
-     */
-
+	/*
+	if (framesRendered % 100 == 0) {
+		float fps = framesRendered;
+		fps /= ((lastRenderTime - firstRenderTime) / 1000.0);
+		std::cout << "FPS: " << fps << " (delayTime:" << delayTime << " Frames: " << framesRendered << ")\n";
+	}
+	++framesRendered;
+	*/
 }
 
