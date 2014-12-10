@@ -23,14 +23,18 @@
 #include "Sprite.hh"
 #include "Window.hh"
 
+#include <memory>
+#include <SDL_mixer.h>
+
 class Cigg: public Sprite {
 public:
-    Cigg(Window& window);
-    virtual ~Cigg();
+	Cigg(Window& window);
+	virtual ~Cigg();
 public:
-    virtual void onCollideWithPlayer(Player& player) override;
+	virtual void onCollideWithPlayer(Player& player) override;
 	virtual void render(Uint32 tickDiff) override;
 private:
+	std::shared_ptr<Mix_Chunk> pickupSound;
 	Uint32 destroyTimeout;
 };
 

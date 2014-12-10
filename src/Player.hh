@@ -26,10 +26,15 @@
 
 class Player: public Character {
 public:
-    Player(Window& window, Board& board);
-    virtual ~Player();
+	Player(Window& window, Board& board);
+	virtual ~Player();
 public:
-    void handleKeyDown(SDL_Event& event);
+	int getScore() const;
+	void addToScore(int points);
+public:
+	void handleKeyDown(SDL_Event& event);
+private:
+	int score;
 };
 
 #endif /* PLAYER_HH_ */

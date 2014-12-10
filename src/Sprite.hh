@@ -32,6 +32,9 @@ public:
 	Sprite(Window& window, const std::string& fileName);
 	virtual ~Sprite();
 public:
+	virtual int getWidth() const override;
+	virtual int getHeight() const override;
+
 	float getCenterX() const;
 	float getCenterY() const;
 
@@ -43,6 +46,9 @@ public:
 
 	float getDistance(const Sprite& sprite) const;
 	float getDistance(int x, int y) const;
+
+	void setRotation(double rotation);
+	double getRotation() const;
 public:
 	virtual void render(Uint32 tickDiff) override;
 	virtual void onCollideWithPlayer(Player& player);

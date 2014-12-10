@@ -20,6 +20,8 @@
 
 #include "GameLoop.hh"
 
+#include <SDL_mixer.h>
+
 #include <iostream>
 #ifdef __EMSCRIPTEN__
 #include <emscripten.h>
@@ -35,27 +37,32 @@ const static unsigned int MAX_FPS = 100;
 static GameLoop* emLoop = nullptr;
 
 void runOne() {
-    emLoop->runOne();
+	emLoop->runOne();
 }
 
 #endif
 
 // Main game loop
 int main(int argc, char** argv) {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS) != 0) {
-        cout << "Error initializing SDL\n";
-        return 1;
-    }
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS) != 0) {
+		cout << "Error initializing SDL\n";
+		return 1;
+	}
 
-    GameLoop loop(SCREEN_WIDTH, SCREEN_HEIGHT, MAX_FPS);
+	if (!Mix_Init(MIX_INIT_MP3)) {
+		cout << "Failed to Mix_Init: " << Mix_GetError() << '\n';
+	}
+	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);
+
+	GameLoop loop(SCREEN_WIDTH, SCREEN_HEIGHT, MAX_FPS);
 
 #ifdef __EMSCRIPTEN__
-    emLoop = &loop;
-    // void emscripten_set_main_loop(em_callback_func func, int fps, int simulate_infinite_loop);
-    emscripten_set_main_loop(runOne, 0, 1);
+	emLoop = &loop;
+	// void emscripten_set_main_loop(em_callback_func func, int fps, int simulate_infinite_loop);
+	emscripten_set_main_loop(runOne, 0, 1);
 #else
-    loop.run();
+	loop.run();
 #endif
 
-    return 0;
+	return 0;
 }

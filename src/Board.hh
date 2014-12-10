@@ -25,10 +25,16 @@
 
 #include <SDL.h>
 
-class Board: public Renderable {
+class Board {
 public:
-    Board(Window& window);
-    virtual ~Board();
+	Board(Window& window);
+	virtual ~Board();
+public:
+	void render();
+private:
+	SDL_Renderer* renderer;
+	SDL_Texture* texTarget;
+	SDL_Rect position;
 };
 
 #endif /* BOARD_HH_ */

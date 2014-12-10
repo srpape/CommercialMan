@@ -32,7 +32,7 @@ public:
     Renderable(Window& window, const std::string& fileName);
     virtual ~Renderable();
 public:
-    virtual void render(Uint32 tickDiff);
+    virtual void render(Uint32 tickDiff) = 0;
 
     virtual int getWidth() const;
     virtual int getHeight() const;

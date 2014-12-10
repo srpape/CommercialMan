@@ -20,7 +20,10 @@
 #include "GameLoop.hh"
 #include "Cigg.hh"
 
+#include <SDL2_gfxPrimitives.h>
 #include <SDL_mixer.h>
+
+#include <string>
 #include <iostream>
 
 GameLoop::GameLoop(Uint32 width, Uint32 height, Uint32 maxFPS) :
@@ -84,10 +87,10 @@ void GameLoop::pollEvents() {
 
 void GameLoop::render(Uint32 tickDiff) {
 	// If we don't reset the color before each RenderClear(), the SDL2_gfx library messes things up when things are drawn.
-	SDL_SetRenderDrawColor(renderer, 0x0, 0, 0x30, SDL_ALPHA_OPAQUE);
+
 	SDL_RenderClear(renderer);
 
-	board.render(tickDiff);
+	board.render();
 	player.render(tickDiff);
 
 	for (Sprite* artifact : artifacts) {
@@ -97,16 +100,19 @@ void GameLoop::render(Uint32 tickDiff) {
 		}
 	}
 
-	// Update the screen
-	SDL_RenderPresent(renderer);
+	const std::string scoreStr = "Score: " + std::to_string(player.getScore());
+	stringRGBA(renderer, 10, window.getHeight() - 40, scoreStr.c_str(), 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
 
-	/*
-	if (framesRendered % 100 == 0) {
+	if (false) {
 		float fps = framesRendered;
 		fps /= ((lastRenderTime - firstRenderTime) / 1000.0);
-		std::cout << "FPS: " << fps << " (delayTime:" << delayTime << " Frames: " << framesRendered << ")\n";
+
+		const std::string fpsStr = "FPS: " + std::to_string(fps);
+		stringRGBA(renderer, 10, window.getHeight() - 24, fpsStr.c_str(), 0xFF, 0xFF, 0xFF, SDL_ALPHA_OPAQUE);
+		++framesRendered;
 	}
-	++framesRendered;
-	*/
+
+	// Update the screen
+	SDL_RenderPresent(renderer);
 }
 

@@ -21,6 +21,7 @@
 
 #include "Player.hh"
 
+#include <string>
 #include <cmath>
 #include <SDL2_gfxPrimitives.h>
 
@@ -29,13 +30,13 @@ Sprite::Sprite(Window& window, const std::string& fileName) :
 
 	position.x = 0;
 	position.y = 0;
-	position.w = getWidth();
-	position.h = getHeight();
+	position.w = Renderable::getWidth();
+	position.h = Renderable::getHeight();
 
 	drawRegion.x = 0;
 	drawRegion.y = 0;
-	drawRegion.w = getWidth();
-	drawRegion.h = getHeight();
+	drawRegion.w = Renderable::getWidth();
+	drawRegion.h = Renderable::getHeight();
 
 	flip = SDL_FLIP_NONE;
 	rotation = 0.0;
@@ -60,15 +61,23 @@ int Sprite::getY() const {
 	return position.y;
 }
 
+int Sprite::getWidth() const {
+	return drawRegion.w;
+}
+
+int Sprite::getHeight() const {
+	return drawRegion.h;
+}
+
 void Sprite::setPosition(int x, int y) {
 	position.x = x;
 	position.y = y;
 }
 
 void Sprite::render(Uint32 tickDiff) {
-
 	SDL_RenderCopyEx(getRenderer(), getTexture(), &drawRegion, &position, rotation, nullptr, flip);
-	//rectangleRGBA(getRenderer(), getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0xFF, 0, 0,	SDL_ALPHA_OPAQUE);
+	//rectangleRGBA(getRenderer(), getX(), getY(), getX() + getWidth(), getY() + getHeight(), 0xFF, 0, 0, SDL_ALPHA_OPAQUE);
+	//stringRGBA(getRenderer(), getX(), getY(), std::string(std::to_string(getX()) + "," + std::to_string(getY())).c_str(), 0xFF, 0, 0, SDL_ALPHA_OPAQUE);
 }
 
 bool Sprite::isColliding(const Sprite& sprite) const {
@@ -97,6 +106,14 @@ float Sprite::getDistance(int x, int y) const {
 
 float Sprite::getDistance(const Sprite& sprite) const {
 	return getDistance(sprite.getCenterX(), sprite.getCenterY());
+}
+
+void Sprite::setRotation(double rotation) {
+	this->rotation = rotation;
+
+}
+double Sprite::getRotation() const {
+	return rotation;
 }
 
 void Sprite::onCollideWithPlayer(Player& player) {

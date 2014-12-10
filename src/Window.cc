@@ -24,12 +24,12 @@
 Window::Window(const std::string& title, unsigned int width, unsigned int height) :
         width(width), height(height) {
 
-    window = SDL_CreateWindow(title.c_str(), 100, 100, width, height, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
     if (!window) {
         throw std::runtime_error("Failed to create SDL window");
     }
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_TARGETTEXTURE);
     if (!renderer) {
         SDL_DestroyWindow(window);
         throw std::runtime_error("Failed to create SDL renderer");

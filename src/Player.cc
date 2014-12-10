@@ -20,7 +20,7 @@
 #include "Player.hh"
 
 Player::Player(Window& window, Board& board) :
-		Character(window, board, "man.png", 2) {
+		Character(window, board, "man.png", 2), score(0) {
 
 }
 
@@ -36,30 +36,30 @@ void Player::handleKeyDown(SDL_Event& event) {
 	case SDL_SCANCODE_UP:
 	case SDL_SCANCODE_W:
 		if (flip == SDL_FLIP_HORIZONTAL) {
-			rotation = 90.0;
+			setRotation(90.0);
 		} else {
-			rotation = -90.0;
+			setRotation(-90.0);
 		}
 		setDirection(UP);
 		break;
 	case SDL_SCANCODE_DOWN:
 	case SDL_SCANCODE_S:
 		if (flip == SDL_FLIP_HORIZONTAL) {
-			rotation = -90.0;
+			setRotation(-90.0);
 		} else {
-			rotation = 90.0;
+			setRotation(90.0);
 		}
 		setDirection(DOWN);
 		break;
 	case SDL_SCANCODE_LEFT:
 	case SDL_SCANCODE_A:
-		rotation = 0.0;
+		setRotation(0.0);
 		setDirection(LEFT);
 		flip = SDL_FLIP_HORIZONTAL;
 		break;
 	case SDL_SCANCODE_RIGHT:
 	case SDL_SCANCODE_D:
-		rotation = 0.0;
+		setRotation(0.0);
 		setDirection(RIGHT);
 		flip = SDL_FLIP_NONE;
 		break;
@@ -68,3 +68,9 @@ void Player::handleKeyDown(SDL_Event& event) {
 	}
 }
 
+int Player::getScore() const {
+	return score;
+}
+void Player::addToScore(int points) {
+	score += points;
+}
