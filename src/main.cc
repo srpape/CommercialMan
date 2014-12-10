@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 		return 1;
 	}
 
-	if (!Mix_Init(MIX_INIT_MP3)) {
+	if (!Mix_Init(MIX_INIT_OGG)) {
 		cout << "Failed to Mix_Init: " << Mix_GetError() << '\n';
 	}
 	Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096);

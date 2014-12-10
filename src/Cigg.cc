@@ -27,9 +27,11 @@
 Cigg::Cigg(Window& window) :
 		Sprite(window, "cigg.png") {
 
-	pickupSound.reset(Mix_LoadWAV("sounds/select.mp3"), Mix_FreeChunk);
-	if (!pickupSound)
-		std::cout << "Failed to load mp3\n";
+	pickupSound.reset(Mix_LoadWAV("sounds/select.ogg"), Mix_FreeChunk);
+	if (!pickupSound) {
+		std::cout << "Failed to load select.ogg\n";
+		std::cout << Mix_GetError() << '\n';
+	}
 
 	destroyTimeout = 0;
 }
