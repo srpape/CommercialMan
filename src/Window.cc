@@ -24,7 +24,7 @@
 Window::Window(const std::string& title, unsigned int width, unsigned int height) :
         width(width), height(height) {
 
-    window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN|SDL_WINDOW_OPENGL);
     if (!window) {
         throw std::runtime_error("Failed to create SDL window");
     }
